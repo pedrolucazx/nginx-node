@@ -12,7 +12,7 @@ const config = {
 
 async function insertPersonAndRetrieve(name) {
   const connection = await mysql.createConnection(config);
-  await connection.query(`CREATE TABLE people`);
+  await connection.query(`CREATE TABLE people(id int not null auto_increment, name varchar(255), primary key(id))`);
   await connection.query(`INSERT INTO people(name) values ('${name}')`);
   const [rows] = await connection.execute(`SELECT * FROM people WHERE name='${name}'`);
   connection.end();
