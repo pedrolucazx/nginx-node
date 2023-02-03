@@ -1,7 +1,7 @@
 version: "3.1"
 services:
     app:
-        container_name: app 
+        container_name: app
         entrypoint: dockerize -wait tcp://mysqlDB:3306 -timeout 40s node index.js
         build:
             context: node
@@ -9,13 +9,13 @@ services:
             - node-network
         volumes:
             - ./node:/usr/src/app
-            - /usr/src/app/node/node_modules
+            - /usr/src/app/node_modules
         tty: true
         ports:
             - 3000:3000
         depends_on:
             - mysqlDB
-    
+
     mysqlDB:
         container_name: db
         image: mysql
@@ -23,12 +23,12 @@ services:
         restart: always
         tty: true
         volumes:
-          - ./mysql:/var/lib/mysql
+            - ./mysql:/var/lib/mysql
         environment:
-          - MYSQL_DATABASE=nodedb
-          - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=nodedb
+            - MYSQL_ROOT_PASSWORD=root
         networks:
-          - node-network
+            - node-network
 
     nginx:
         container_name: nginx
@@ -42,5 +42,5 @@ services:
             - app
 
 networks:
-  node-network:
-    driver: bridge
+    node-network:
+        driver: bridge
